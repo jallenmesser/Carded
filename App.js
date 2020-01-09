@@ -1,24 +1,34 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { StyleSheet, Text, View, Image, FlatList, TouchableOpacity } from 'react-native';
 
 export default function App() {
   const [name, setName] = useState('Jallen');
-  const [cards, setCards] = useState([
-    { name: 'Jallen', id: '1', image: 'https://image.flaticon.com/icons/png/512/149/149452.png' },
-    { name: 'yoshi', id: '2', image: 'https://i.ytimg.com/vi/0iUTZajxlWI/maxresdefault.jpg' },
-    { name: 'mario', id: '3', image: 'https://image.flaticon.com/icons/png/512/149/149452.png' },
-    { name: 'luigi', id: '4', image: 'https://image.flaticon.com/icons/png/512/149/149452.png' },
-    { name: 'peach', id: '5', image: 'https://image.flaticon.com/icons/png/512/149/149452.png' },
-    { name: 'toad', id: '6', image: 'https://image.flaticon.com/icons/png/512/149/149452.png' },
-    { name: 'bowser', id: '7', image: 'https://image.flaticon.com/icons/png/512/149/149452.png' },
-  ]);
+
+    const URL = `http://localhost:3000/api/v1/users`;
+    const [users, setUsers] = useState([]);
+    const [loading, setLoading ] = useState(true);
+    useEffect(()=>{
+      fetch(URL)
+      .then((response) => response.json())
+      .then( users  => {
+        setUsers(users);
+        //console.log(users);
+        setLoading(false);
+      })
+      .catch( error => {
+        console.error(error);
+      });
+  
+    } , []);
+  
 
   const pressHandler = (id) => {
     console.log(id)
-    setCards((prevCards) => {
+    setUsers((prevCards) => {
       return prevCards
     }
     )}
+
 
   return (
     <View style={styles.container}>
@@ -31,7 +41,7 @@ export default function App() {
       <FlatList 
         numColumns={3}
         keyExtractor={(item) => item.id} 
-        data={cards} 
+        data={users} 
         renderItem={({ item }) => ( 
           <TouchableOpacity style={styles.card} onPress={() => pressHandler(item.id)}>
             <Image style={styles.profileIcon} source={{uri: item.image}} />
@@ -39,6 +49,7 @@ export default function App() {
           </TouchableOpacity>
         )}
       />
+        <Text style={{fontSize: 30}}>users[0]</Text>
     </View>
   );
 }
