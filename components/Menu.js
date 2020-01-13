@@ -3,23 +3,45 @@ import styled from "styled-components";
 import { Animated, TouchableOpacity, Dimensions } from "react-native";
 import MenuItem from "./MenuItem";
 import { Ionicons } from '@expo/vector-icons';
+import { connect } from 'react-redux'
 
+
+function mapStateToProps(state) {
+  return { action: state.action }
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    closeMenu: () => dispatch({
+      type: "CLOSE_MENU"
+    })
+  }
+}
 
 const screenHeight = Dimensions.get("window").height;
 
-export default function Menu() {
+function Menu(props) {
   const [top, setTop] = useState(new Animated.Value(screenHeight));
   useEffect(() => {
-    Animated.spring(top, {
-      toValue: 0
-    }).start();
-
+    toggleMenu()
   }, []);
 
+  useEffect(() => {
+    toggleMenu()
+  }, [props.action])
+
   const toggleMenu = () => {
-    Animated.spring(top, {
-      toValue: screenHeight
-    }).start()
+
+    if (props.action == 'openMenu') {
+      Animated.spring(top, {
+        toValue: 54
+      }).start();
+    }
+    if (props.action == 'closeMenu') {
+      Animated.spring(top, {
+        toValue: screenHeight
+      }).start()
+    }
   }
 
 
@@ -32,7 +54,7 @@ export default function Menu() {
         <Subtitle>The Best</Subtitle>
       </Cover>
       <TouchableOpacity
-        onPress={toggleMenu}
+        onPress={props.closeMenu}
         style={{ position: "absolute", top: 120, left: "50%", marginLeft: -22, zIndex: 1 }}>
         <CloseView>
           <Ionicons name="ios-close" size={44} color="#546bfb" />
@@ -52,6 +74,7 @@ export default function Menu() {
   );
 }
 
+export default connect(mapStateToProps, mapDispatchToProps)(Menu);
 
 const Container = styled.View`
     position: absolute;
@@ -59,6 +82,8 @@ const Container = styled.View`
     width: 100%;
     height: 100%;
     z-index: 100;
+    border-radius: 10px;
+    overflow: hidden;
     `;
 
 const AnimatedContainer = Animated.createAnimatedComponent(Container);
