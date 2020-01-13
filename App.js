@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, Image, FlatList, ScrollView } from 'react-native';
+import { FlatList, TouchableOpacity } from 'react-native';
 import Card from "./components/Card";
+import styled from "styled-components";
+import Menu from "./components/Menu";
 
 export default function App() {
   const [name, setName] = useState('Jallen');
@@ -13,7 +15,7 @@ export default function App() {
       .then((response) => response.json())
       .then(users => {
         setUsers(users);
-        //console.log(users);
+        console.log(users);
         setLoading(false);
       })
       .catch(error => {
@@ -33,81 +35,89 @@ export default function App() {
 
 
   return (
-    <View style={styles.container}>
-      <View style={styles.nav}>
-        <Image style={styles.logo} source={require('./Logo.png')} />
-      </View>
-      <View style={styles.cardTitle}>
-        <Text style={{ fontSize: 30 }}>{name}'s Cards:</Text>
-      </View>
-      <ScrollView horizontal={true}>
-        <FlatList
-          horizontal={true}
-          keyExtractor={(item) => item.id}
-          data={users}
-          renderItem={({ item }) => (
-            // <TouchableOpacity style={styles.card} onPress={() => pressHandler(item.id)}>
-            //   <Image style={styles.profileIcon} source={{ uri: item.image }} />
-            //   <Text style={styles.cardName}>{item.name}</Text>
-            // </TouchableOpacity>
+    <Container>
+      <Menu></Menu>
+      <TitleBar>
+        <Logo style={{ resizeMode: "contain" }} source={require('./Logo.png')} />
+        <TouchableOpacity>
+          <User>
+            <UserText>
+              <Title>Welcome back,</Title>
+              <Name>{name}</Name>
+            </UserText>
+            <Avatar source={{ uri: "https://pbs.twimg.com/profile_images/1100801423158185984/KbA9oOMI_400x400.jpg" }} />
+          </User>
+        </TouchableOpacity>
+      </TitleBar>
+      <Subtitle>{name}'s Cards:</Subtitle>
+      <FlatList
+        horizontal={true}
+        keyExtractor={(item) => item.id}
+        data={users}
+        renderItem={({ item }) => (
+          <TouchableOpacity onPress={() => pressHandler(item.id)}>
             <Card
               title={item.name}
               image={{ uri: item.image }}
               caption={item.name}
               subtitle={item.username} />
-          )}
-        />
-      </ScrollView>
-    </View>
+          </TouchableOpacity>
+
+        )}
+      />
+    </Container>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  nav: {
-    marginTop: 50,
-    height: 55,
-    backgroundColor: 'white',
-    elevation: 3,
-    paddingHorizontal: 15,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-around'
-  },
-  logo: {
-    width: 200,
-    resizeMode: "contain",
-  },
-  cardTitle: {
-    marginTop: 25,
-    marginLeft: 25,
-    alignItems: "flex-start"
-  },
-  card: {
-    flex: 1,
-    flexDirection: 'row',
-    marginHorizontal: 10,
-    marginVertical: 10,
-    padding: 20,
-    backgroundColor: '#ff8983',
-    fontSize: 24,
-    justifyContent: "flex-start",
-    alignItems: 'center',
-    borderRadius: 10,
-  },
-  profileIcon: {
-    width: 30,
-    height: 30,
-    borderRadius: 20,
-  },
-  cardName: {
-    flex: 1,
-    marginLeft: 5,
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderColor: 'black',
-    borderStyle: 'solid',
-  }
-});
+const Container = styled.View`
+  background: #f0f3f5;
+  flex: 1;
+`;
+
+const TitleBar = styled.View`
+  flex-direction: row;
+  width: 100%;
+  margin-top: 50px;
+  padding-left: 20px;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const Title = styled.Text`
+  font-size: 16px;
+  color: #b8bece;
+  font-weight: 500;
+`;
+
+const Name = styled.Text`
+  font-size: 20px;
+  color: #3c4560;
+  font-weight: bold;
+`;
+const Logo = styled.Image`
+  width: 100;
+`
+const Avatar = styled.Image`
+  width: 44px;
+  height: 44px;
+  background: black;
+  border-radius: 22px;
+  margin-right: 20px;
+  top: 0;
+  left: 0;
+`;
+const User = styled.View`
+  flex-direction: row;
+`
+const UserText = styled.View`
+  align-items: flex-end;
+  margin-right: 10px;
+`
+const Subtitle = styled.Text`
+  color: #b8bece;
+  font-weight: 600;
+  font-size: 15px;
+  margin-left: 20px;
+  margin-top: 20px;
+  text-transform: uppercase;
+`;
