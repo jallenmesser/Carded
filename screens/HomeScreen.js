@@ -19,7 +19,7 @@ function mapDispatchToProps(dispatch) {
 }
 
 function HomeScreen(props) {
-  const [name, setName] = useState('Jallen');
+  const [name, setName] = useState('');
   const [scale, setScale] = useState(new Animated.Value(1))
   const [opacity, setOpacity] = useState(new Animated.Value(1))
 
@@ -37,8 +37,11 @@ function HomeScreen(props) {
       .catch(error => {
         console.error(error);
       });
-
   }, []);
+
+  useEffect(() => {
+    setName(props.name)
+  })
 
   useEffect(() => {
     toggleMenu()
@@ -88,13 +91,13 @@ function HomeScreen(props) {
               <User>
                 <UserText>
                   <Title>Welcome back,</Title>
-                  <Name>{props.name}</Name>
+                  <Name>{name}</Name>
                 </UserText>
                 <Avatar />
               </User>
             </TouchableOpacity>
           </TitleBar>
-          <Subtitle>{props.name}'s Cards:</Subtitle>
+          <Subtitle>{name}'s Cards:</Subtitle>
           <FlatList
             horizontal={true}
             keyExtractor={(item) => item.id}
@@ -137,6 +140,7 @@ const TitleBar = styled.View`
   padding-left: 20px;
   justify-content: space-between;
   align-items: center;
+  padding-right: 20px;
 `;
 
 const Title = styled.Text`

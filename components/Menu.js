@@ -4,6 +4,7 @@ import { Animated, TouchableOpacity, Dimensions } from "react-native";
 import MenuItem from "./MenuItem";
 import { Ionicons } from '@expo/vector-icons';
 import { connect } from 'react-redux'
+import Avatar from "./Avatar"
 
 
 function mapStateToProps(state) {
@@ -50,6 +51,7 @@ function Menu(props) {
       <Cover>
         <Image
           source={{ uri: 'https://cdn.pixabay.com/photo/2015/05/20/10/41/plasma-775169_960_720.jpg' }} />
+        <Avatar />
         <Title>Jallen Messersmith</Title>
         <Subtitle>The Best</Subtitle>
       </Cover>

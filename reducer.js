@@ -1,8 +1,3 @@
-import React from 'react'
-import { createStore } from 'redux'
-import { Provider } from 'react-redux'
-import HomeScreen from './screens/HomeScreen'
-
 const defaultState = {
   action: '',
   name: ''
@@ -21,12 +16,4 @@ const reducer = (prevState = defaultState, action) => {
   }
 }
 
-const store = createStore(reducer)
-
-const App = () => (
-  <Provider store={store}>
-    <HomeScreen />
-  </Provider>
-)
-
-export default App;
+export default reducer
