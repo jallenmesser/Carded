@@ -110,11 +110,7 @@ const CloseView = styled.View`
       align-items: center;
       box-shadow: 0 5px 10px rgba(0,0,0, 0.15)
     `
-const CloseButton = styled.Text`
-    font-size: 20px;
-    color: #3c4560;
-    font-weight: bold;
-`
+
 const Image = styled.Image`
   position: absolute;
   height: 100%;

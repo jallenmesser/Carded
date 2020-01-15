@@ -3,10 +3,11 @@ import { FlatList, TouchableOpacity, SafeAreaView, Animated, Easing } from 'reac
 import Card from "../components/Card";
 import styled from "styled-components";
 import Menu from "../components/Menu";
+import Avatar from "../components/Avatar";
 import { connect } from 'react-redux'
 
 function mapStateToProps(state) {
-  return { action: state.action }
+  return { action: state.action, name: state.name }
 }
 
 function mapDispatchToProps(dispatch) {
@@ -22,15 +23,15 @@ function HomeScreen(props) {
   const [scale, setScale] = useState(new Animated.Value(1))
   const [opacity, setOpacity] = useState(new Animated.Value(1))
 
-  const URL = `http://localhost:3000/api/v1/users`;
-  const [users, setUsers] = useState([]);
+  const URL = `http://localhost:3000/api/v1/cards`;
+  const [cards, setCards] = useState([]);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     fetch(URL)
       .then((response) => response.json())
-      .then(users => {
-        setUsers(users);
-        console.log(users);
+      .then(cards => {
+        setCards(cards);
+        console.log(cards);
         setLoading(false);
       })
       .catch(error => {
@@ -68,7 +69,7 @@ function HomeScreen(props) {
 
   const pressHandler = (id) => {
     console.log(id)
-    setUsers((prevCards) => {
+    setCards((prevCards) => {
       return prevCards
     }
     )
@@ -87,24 +88,24 @@ function HomeScreen(props) {
               <User>
                 <UserText>
                   <Title>Welcome back,</Title>
-                  <Name>{name}</Name>
+                  <Name>{props.name}</Name>
                 </UserText>
-                <Avatar source={{ uri: "https://pbs.twimg.com/profile_images/1100801423158185984/KbA9oOMI_400x400.jpg" }} />
+                <Avatar />
               </User>
             </TouchableOpacity>
           </TitleBar>
-          <Subtitle>{name}'s Cards:</Subtitle>
+          <Subtitle>{props.name}'s Cards:</Subtitle>
           <FlatList
             horizontal={true}
             keyExtractor={(item) => item.id}
-            data={users}
+            data={cards}
             renderItem={({ item }) => (
               <TouchableOpacity onPress={() => pressHandler(item.id)}>
                 <Card
-                  title={item.name}
-                  image={{ uri: item.image }}
+                  title={item.note}
+                  image={{ uri: item.picture }}
                   caption={item.name}
-                  subtitle={item.username} />
+                  subtitle={item.company} />
               </TouchableOpacity>
 
             )}
@@ -115,7 +116,7 @@ function HomeScreen(props) {
   );
 }
 
-export default connect(mapDispatchToProps, mapDispatchToProps)(HomeScreen)
+export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen)
 
 const RootView = styled.View`
   background: black;
@@ -152,15 +153,15 @@ const Name = styled.Text`
 const Logo = styled.Image`
   width: 100;
 `
-const Avatar = styled.Image`
-  width: 44px;
-  height: 44px;
-  background: black;
-  border-radius: 22px;
-  margin-right: 20px;
-  top: 0;
-  left: 0;
-`;
+// const Avatar = styled.Image`
+//   width: 44px;
+//   height: 44px;
+//   background: black;
+//   border-radius: 22px;
+//   margin-right: 20px;
+//   top: 0;
+//   left: 0;
+// `;
 const User = styled.View`
   flex-direction: row;
 `

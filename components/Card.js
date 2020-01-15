@@ -47,7 +47,7 @@ const Image = styled.Image`
 `;
 
 const Title = styled.Text`
-    color: white;
+    color: black;
     font-size: 24px;
     font-weight: bold;
     width: 170px;
