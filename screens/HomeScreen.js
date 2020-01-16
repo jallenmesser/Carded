@@ -27,7 +27,7 @@ function HomeScreen(props) {
   useEffect(() => {
     props.fetchCards()
     props.fetchUser()
-  })
+  }, [])
 
   useEffect(() => {
     setUser(props.user)

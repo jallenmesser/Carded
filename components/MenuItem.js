@@ -36,6 +36,7 @@ const Title = styled.Text`
   color: #333333;
   font-size: 24;
   font-weight: 600;
+  text-decoration: underline rgba(0,0,0, 0.15);
 `;
 
 const Text = styled.Text`

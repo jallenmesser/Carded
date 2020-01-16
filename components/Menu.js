@@ -47,10 +47,10 @@ function Menu(props) {
     <AnimatedContainer style={{ top: top }}>
       <Cover>
         <Image
-          source={{ uri: 'https://cdn.pixabay.com/photo/2015/05/20/10/41/plasma-775169_960_720.jpg' }} />
-        <Avatar image={props.image} />
-        <Title>Jallen Messersmith</Title>
-        <Subtitle>The Best</Subtitle>
+          source={{ uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQua59CnCLZGw_cL-9_drg5zpBNlP9bRVAPPP6qJd-z-uWhdpb7&s' }} />
+        <Avatar image={props.user.image} />
+        <Title>{props.user.name}</Title>
+        <Subtitle>@{props.user.username}</Subtitle>
       </Cover>
       <TouchableOpacity
         onPress={props.closeMenu}
@@ -137,7 +137,7 @@ const items = [
   },
   {
     icon: "ios-exit",
-    title: "Log out",
+    title: "Logout",
     text: "see you soon!"
   }
 ];
