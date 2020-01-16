@@ -4,12 +4,13 @@ import { Provider } from 'react-redux'
 import HomeScreen from './screens/HomeScreen'
 import reducer from './reducer'
 import thunk from 'redux-thunk'
+import AppNavigator from './navigator/AppNavigator'
 
 const store = createStore(reducer, applyMiddleware(thunk))
 
 const App = () => (
   <Provider store={store}>
-    <HomeScreen />
+    <AppNavigator />
   </Provider>
 )
 

@@ -95,10 +95,10 @@ function HomeScreen(props) {
           <Subtitle>{user.name}'s Cards:</Subtitle>
           <FlatList
             horizontal={true}
-            keyExtractor={(item) => item.id}
+            keyExtractor={(item) => item.id.toString()}
             data={cards}
             renderItem={({ item }) => (
-              <TouchableOpacity onPress={() => pressHandler(item.id)}>
+              <TouchableOpacity onPress={() => { props.navigation.push('Section') }}>
                 <Card
                   title={item.note}
                   image={{ uri: item.picture }}
@@ -112,6 +112,10 @@ function HomeScreen(props) {
       </AnimatedContainer>
     </RootView>
   );
+}
+
+HomeScreen.navigationOptions = {
+  headerShown: false
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen)
