@@ -1,6 +1,7 @@
 const defaultState = {
   action: '',
-  name: ''
+  user: { name: 'Placeholder' },
+  cards: []
 }
 
 const reducer = (prevState = defaultState, action) => {
@@ -9,8 +10,10 @@ const reducer = (prevState = defaultState, action) => {
       return { ...prevState, action: 'openMenu' };
     case "CLOSE_MENU":
       return { ...prevState, action: 'closeMenu' };
-    case "UPDATE_NAME":
-      return { ...prevState, name: action.name }
+    case "UPDATE_USER":
+      return { ...prevState, user: action.payload };
+    case "UPDATE_CARDS":
+      return { ...prevState, cards: action.payload }
     default:
       return prevState;
   }

@@ -5,47 +5,42 @@ import styled from "styled-components";
 import Menu from "../components/Menu";
 import Avatar from "../components/Avatar";
 import { connect } from 'react-redux'
+import { openMenu, fetchUser, fetchCards } from '../actionCreators'
 
 function mapStateToProps(state) {
-  return { action: state.action, name: state.name }
+  return { action: state.action, user: state.user, cards: state.cards }
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    openMenu: () => dispatch({
-      type: "OPEN_MENU"
-    })
-  }
+const mapDispatchToProps = {
+  fetchUser,
+  fetchCards,
+  openMenu
 }
 
 function HomeScreen(props) {
-  const [name, setName] = useState('');
+  const [user, setUser] = useState(props.user);
   const [scale, setScale] = useState(new Animated.Value(1))
   const [opacity, setOpacity] = useState(new Animated.Value(1))
+  const [cards, setCards] = useState(props.cards);
 
-  const URL = `http://localhost:3000/api/v1/cards`;
-  const [cards, setCards] = useState([]);
-  const [loading, setLoading] = useState(true);
-  useEffect(() => {
-    fetch(URL)
-      .then((response) => response.json())
-      .then(cards => {
-        setCards(cards);
-        console.log(cards);
-        setLoading(false);
-      })
-      .catch(error => {
-        console.error(error);
-      });
-  }, []);
 
   useEffect(() => {
-    setName(props.name)
+    props.fetchCards()
+    props.fetchUser()
   })
+
+  useEffect(() => {
+    setUser(props.user)
+  }, [props.user])
+
+  useEffect(() => {
+    setCards(props.cards)
+  }, [props.cards])
 
   useEffect(() => {
     toggleMenu()
   }, [props.action])
+
 
   const toggleMenu = () => {
     if (props.action == 'openMenu') {
@@ -91,13 +86,13 @@ function HomeScreen(props) {
               <User>
                 <UserText>
                   <Title>Welcome back,</Title>
-                  <Name>{name}</Name>
+                  <Name>{user.name}</Name>
                 </UserText>
                 <Avatar />
               </User>
             </TouchableOpacity>
           </TitleBar>
-          <Subtitle>{name}'s Cards:</Subtitle>
+          <Subtitle>{user.name}'s Cards:</Subtitle>
           <FlatList
             horizontal={true}
             keyExtractor={(item) => item.id}

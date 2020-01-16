@@ -1,42 +1,24 @@
 import React from "react";
 import styled from "styled-components";
 import { connect } from "react-redux"
+import { updateUser } from '../actionCreators'
 
 function mapStateToProps(state) {
   return {
-    name: state.name
+    user: state.user
   }
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    updateName: name => dispatch({
-      type: "UPDATE_NAME",
-      name: name
-    })
-  }
+const mapDispatchToProps = {
+  updateUser
 }
 
-class Avatar extends React.Component {
-  state = {
-    photo: "https://cl.ly/55da82beb939/download/avatar-default.jpg"
-  };
+function Avatar(props) {
 
-  componentDidMount() {
-    fetch("http://localhost:3000/api/v1/users")
-      .then(response => response.json())
-      .then(response => {
-        this.setState({
-          photo: response[0].image
-        });
 
-        this.props.updateName(response[0].name)
-      });
-  }
-
-  render() {
-    return <Image source={{ uri: this.state.photo }} />;
-  }
+  return (
+    <Image source={{ uri: props.user.image }} />
+  )
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Avatar);

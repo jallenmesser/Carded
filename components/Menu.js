@@ -5,18 +5,15 @@ import MenuItem from "./MenuItem";
 import { Ionicons } from '@expo/vector-icons';
 import { connect } from 'react-redux'
 import Avatar from "./Avatar"
+import { closeMenu } from '../actionCreators'
 
 
 function mapStateToProps(state) {
-  return { action: state.action }
+  return { action: state.action, user: state.user }
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    closeMenu: () => dispatch({
-      type: "CLOSE_MENU"
-    })
-  }
+const mapDispatchToProps = {
+  closeMenu
 }
 
 const screenHeight = Dimensions.get("window").height;
@@ -51,7 +48,7 @@ function Menu(props) {
       <Cover>
         <Image
           source={{ uri: 'https://cdn.pixabay.com/photo/2015/05/20/10/41/plasma-775169_960_720.jpg' }} />
-        <Avatar />
+        <Avatar image={props.image} />
         <Title>Jallen Messersmith</Title>
         <Subtitle>The Best</Subtitle>
       </Cover>
@@ -59,7 +56,7 @@ function Menu(props) {
         onPress={props.closeMenu}
         style={{ position: "absolute", top: 120, left: "50%", marginLeft: -22, zIndex: 1 }}>
         <CloseView>
-          <Ionicons name="ios-close" size={44} color="#546bfb" />
+          <Ionicons name="ios-close" size={44} color="#ff8983" />
         </CloseView>
       </TouchableOpacity>
       <Content>
@@ -137,16 +134,6 @@ const items = [
     icon: "ios-settings",
     title: "Account",
     text: "settings"
-  },
-  {
-    icon: "ios-card",
-    title: "Billing",
-    text: "payments"
-  },
-  {
-    icon: "ios-compass",
-    title: "Learn React",
-    text: "start course"
   },
   {
     icon: "ios-exit",

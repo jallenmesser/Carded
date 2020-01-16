@@ -1,27 +1,11 @@
 import React from 'react'
-import { createStore } from 'redux'
+import { createStore, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
 import HomeScreen from './screens/HomeScreen'
+import reducer from './reducer'
+import thunk from 'redux-thunk'
 
-const defaultState = {
-  action: '',
-  name: ''
-}
-
-const reducer = (prevState = defaultState, action) => {
-  switch (action.type) {
-    case "OPEN_MENU":
-      return { ...prevState, action: 'openMenu' };
-    case "CLOSE_MENU":
-      return { ...prevState, action: 'closeMenu' };
-    case "UPDATE_NAME":
-      return { ...prevState, name: action.name }
-    default:
-      return prevState;
-  }
-}
-
-const store = createStore(reducer)
+const store = createStore(reducer, applyMiddleware(thunk))
 
 const App = () => (
   <Provider store={store}>
