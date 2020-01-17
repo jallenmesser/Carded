@@ -65,15 +65,6 @@ function HomeScreen(props) {
     }
   }
 
-  const pressHandler = (id) => {
-    console.log(id)
-    setCards((prevCards) => {
-      return prevCards
-    }
-    )
-  }
-
-
   return (
     <RootView>
       <Menu></Menu>
