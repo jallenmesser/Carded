@@ -9,7 +9,7 @@ import { closeMenu } from '../actionCreators'
 
 
 function mapStateToProps(state) {
-  return { action: state.action, user: state.user }
+  return { action: state.action, user: state.user, ability: state.ability }
 }
 
 const mapDispatchToProps = {
@@ -50,7 +50,7 @@ function Menu(props) {
           source={{ uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQua59CnCLZGw_cL-9_drg5zpBNlP9bRVAPPP6qJd-z-uWhdpb7&s' }} />
         <Avatar image={props.user.image} />
         <Title>{props.user.name}</Title>
-        <Subtitle>@{props.user.abilities[0].ability.name}</Subtitle>
+        <Subtitle>@{props.ability}</Subtitle>
       </Cover>
       <TouchableOpacity
         onPress={props.closeMenu}
