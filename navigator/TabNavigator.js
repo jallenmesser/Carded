@@ -5,6 +5,7 @@ import { createBottomTabNavigator } from 'react-navigation-tabs';
 import { createStackNavigator } from 'react-navigation-stack'
 import HomeScreen from '../screens/HomeScreen'
 import SectionScreen from '../screens/SectionScreen'
+import CardsScreen from '../screens/CardsScreen'
 import { Ionicons } from '@expo/vector-icons';
 
 const activeColor = '#ff8983'
@@ -20,25 +21,37 @@ const HomeStack = createStackNavigator(
   }
 );
 
-HomeStack.navigationOptions = {
-  tabBarLabel: ({ focused }) => {
-    return <Title>Home</Title>
-  },
-  tabBarIcon: ({ focused }) => {
-    return <Ionicons name="ios-home" size={26} color={
-      focused ? activeColor : inactiveColor
-    } />
+HomeStack.navigationOptions = ({ navigation }) => {
+
+  let tabBarVisible = true;
+  const routeName = navigation.state.routes[navigation.state.index].routeName;
+
+  if (routeName == "Section") {
+    tabBarVisible = false
+  }
+
+
+  return {
+    tabBarVisible,
+    tabBarLabel: () => {
+      return <Title>Home</Title>
+    },
+    tabBarIcon: ({ focused }) => {
+      return <Ionicons name="ios-home" size={26} color={
+        focused ? activeColor : inactiveColor
+      } />
+    }
   }
 }
 
 const CardsStack = createStackNavigator(
   {
-    Cards: SectionScreen
+    Cards: CardsScreen
   }
 );
 
 CardsStack.navigationOptions = {
-  tabBarLabel: ({ focused }) => {
+  tabBarLabel: () => {
     return <Title> My Cards</Title >
   },
   tabBarIcon: ({ focused }) => {

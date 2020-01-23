@@ -53,7 +53,7 @@ function HomeScreen(props) {
         toValue: 0.5
       }).start();
     }
-    if (props.action == 'openMenu') {
+    if (props.action == 'closeMenu') {
       Animated.timing(scale, {
         toValue: 1,
         duration: 300,
@@ -89,7 +89,11 @@ function HomeScreen(props) {
             keyExtractor={(item) => item.id.toString()}
             data={cards}
             renderItem={({ item }) => (
-              <TouchableOpacity onPress={() => { props.navigation.push('Section') }}>
+              <TouchableOpacity onPress={() => {
+                props.navigation.push('Section', {
+                  section: item
+                })
+              }}>
                 <Card
                   title={item.note}
                   image={{ uri: item.picture }}
@@ -119,7 +123,8 @@ const RootView = styled.View`
 const Container = styled.View`
   background: #f0f3f5;
   flex: 1;
-  border-radius: 10px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
 `;
 
 const AnimatedContainer = Animated.createAnimatedComponent(Container)
