@@ -39,6 +39,7 @@ function HomeScreen(props) {
 
   useEffect(() => {
     toggleMenu()
+    props.fetchUser()
   }, [props.action])
 
 

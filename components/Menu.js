@@ -50,7 +50,7 @@ function Menu(props) {
           source={{ uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQua59CnCLZGw_cL-9_drg5zpBNlP9bRVAPPP6qJd-z-uWhdpb7&s' }} />
         <Avatar image={props.user.image} />
         <Title>{props.user.name}</Title>
-        <Subtitle>@{props.user.username}</Subtitle>
+        <Subtitle>@{props.user.abilities[0].ability.name}</Subtitle>
       </Cover>
       <TouchableOpacity
         onPress={props.closeMenu}

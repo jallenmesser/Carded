@@ -2,7 +2,8 @@ const defaultState = {
   action: '',
   user: { name: 'Placeholder' },
   cards: [],
-  cardInFullScreen: ''
+  cardInFullScreen: '',
+  image: 'http://cdn3.whatculture.com/images/2019/03/9a76f69c21e1525a-600x338.png'
 }
 
 const reducer = (prevState = defaultState, action) => {
@@ -13,7 +14,7 @@ const reducer = (prevState = defaultState, action) => {
     case "CLOSE_MENU":
       return { ...prevState, action: 'closeMenu' };
     case "UPDATE_USER":
-      return { ...prevState, user: action.payload };
+      return { ...prevState, user: action.payload, image: action.payload.sprites.front_shiny };
     case "UPDATE_CARDS":
       return { ...prevState, cards: action.payload };
     case "OPEN_CARD":

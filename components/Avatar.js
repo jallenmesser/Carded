@@ -1,11 +1,12 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { connect } from "react-redux"
 import { updateUser } from '../actionCreators'
 
 function mapStateToProps(state) {
   return {
-    user: state.user
+    user: state.user,
+    image: state.image
   }
 }
 
@@ -14,10 +15,15 @@ const mapDispatchToProps = {
 }
 
 function Avatar(props) {
+  const [image, setImage] = useState(props.image)
+
+  useEffect(() => {
+    setImage(props.image)
+  }, [props.user])
 
 
   return (
-    <Image source={{ uri: props.user.image }} />
+    <Image source={{ uri: image }} />
   )
 }
 
