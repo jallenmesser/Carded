@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import Project from '../components/Project'
 import { PanResponder, Animated } from 'react-native'
 import { connect } from 'react-redux'
-import { fetchUser, fetchCards } from '../actionCreators'
+import { fetchUser, fetchCards, selectCard } from '../actionCreators'
 import { useSafeArea } from 'react-native-safe-area-context'
 
 function mapStateToProps(state) {
@@ -12,10 +12,12 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = {
   fetchUser,
-  fetchCards
+  fetchCards,
+  selectCard
 }
 
 const CardsScreen = props => {
+  console.log(props.selectCard)
   const [cardInFullScreen, setCardInFullScreen] = useState(props.cardInFullScreen)
   const [cards, setCards] = useState(props.cards);
   const [user, setUser] = useState(props.user);
@@ -46,7 +48,6 @@ const CardsScreen = props => {
       if (gestureState.dx === 0 && gestureState.dy === 0) {
         return false;
       } else {
-        console.log('pan responder', cardInFullScreen)
         if (cardInFullScreen === 'openCard') {
           return false;
         } else {
@@ -69,7 +70,6 @@ const CardsScreen = props => {
     onPanResponderRelease: (evt, gestureState) => {
       const positionY = position.y.__getValue()
       const positionX = position.x.__getValue()
-      console.log(positionX)
       if (positionY > 300) {
         Animated.timing(position, {
           toValue: { x: positionX, y: 1000 }
@@ -80,6 +80,7 @@ const CardsScreen = props => {
           thirdScale.setValue(0.8)
           thirdTranslateY.setValue(-50)
           setIndex(getNextIndex(index))
+          props.selectCard(cards[index])
         })
       } else if (positionY < -300) {
         Animated.timing(position, {
@@ -91,6 +92,7 @@ const CardsScreen = props => {
           thirdScale.setValue(0.8)
           thirdTranslateY.setValue(-50)
           setIndex(getNextIndex(index))
+          props.selectCard(cards[index])
         })
       } else if (positionX < -150) {
         Animated.timing(position, {
@@ -134,10 +136,10 @@ const CardsScreen = props => {
           // styles.appStyles,
         ]}>
         <Project
-          image={cards[index].picture}
+          image={cards[index].sprites.front_default}
           title={cards[index].company}
           name={cards[index].name}
-          company={cards[index].company}
+          company={cards[index].types[0].type.name}
           canOpen={true}
         />
       </Animated.View>
@@ -156,10 +158,10 @@ const CardsScreen = props => {
         ]
       }}>
         <Project
-          image={cards[getNextIndex(index)].picture}
+          image={cards[getNextIndex(index)].sprites.front_default}
           title={cards[getNextIndex(index)].company}
           name={cards[getNextIndex(index)].name}
-          company={cards[getNextIndex(index)].company}
+          company={cards[getNextIndex(index)].types[0].type.name}
         />
       </Animated.View>
       <Animated.View style={{
@@ -177,10 +179,10 @@ const CardsScreen = props => {
         ]
       }}>
         <Project
-          image={cards[getNextIndex(index + 1)].picture}
+          image={cards[getNextIndex(index + 1)].sprites.front_default}
           title={cards[getNextIndex(index + 1)].company}
           name={cards[getNextIndex(index + 1)].name}
-          company={cards[getNextIndex(index + 1)].company}
+          company={cards[getNextIndex(index + 1)].types[0].type.name}
         />
       </Animated.View>
     </Container>

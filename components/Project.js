@@ -43,13 +43,11 @@ function Project(props) {
   const [opacity, setOpacity] = useState(new Animated.Value(0))
 
   const showCard = () => {
-    console.log("First")
-    console.log("First 2.0")
+
 
 
     // dispatch(openCard())
 
-    console.log("Second")
 
     if (!props.canOpen) return;
 
@@ -57,14 +55,11 @@ function Project(props) {
     Animated.spring(cardHeight, { toValue: screenHeight - tabBarHeight }).start()
     Animated.spring(titleTop, { toValue: 40 }).start()
     Animated.timing(opacity, { toValue: 1 }).start()
-    console.log("Third")
 
 
     // props.openCard()
     // dispatch(openCard())
-    console.log('I am aftert the open card')
     StatusBar.setHidden(true)
-    console.log('I am after the status bar')
   }
 
   const unshowCard = () => {
@@ -78,7 +73,7 @@ function Project(props) {
     StatusBar.setHidden(false)
     // props.closeCard()
 
-    // console.log(props.action)
+
   }
 
   return (
@@ -87,7 +82,7 @@ function Project(props) {
         <Cover>
           <Image source={{ uri: props.image }} />
           <AnimatedTitle style={{ top: titleTop }}>{props.title}</AnimatedTitle>
-          <Author>by {props.name}</Author>
+          <Author>{props.name}</Author>
         </Cover>
         <Text>{props.company}</Text>
         <TouchableOpacity style={{ position: "absolute", top: 20, right: 20 }} onPress={unshowCard}>
@@ -140,7 +135,7 @@ const Title = styled.Text`
   left: 20px;
   font-size: 24px;
   font-weight: bold;
-  color: white;
+  color: black;
   width: 300px;
 `;
 
@@ -150,7 +145,7 @@ const Author = styled.Text`
   position: absolute;
   bottom: 20px;
   left: 20px;
-  color: rgba(255, 255, 255, 0.8);
+  color: #ff8983;
   font-size: 15px;
   font-weight: 600;
   text-transform: uppercase;

@@ -8,7 +8,7 @@ import { connect } from 'react-redux'
 import { openMenu, fetchUser, fetchCards } from '../actionCreators'
 
 function mapStateToProps(state) {
-  return { action: state.action, user: state.user, cards: state.cards }
+  return { action: state.action, user: state.user, cards: state.cards, selectedCards: state.selectedCards }
 }
 
 const mapDispatchToProps = {
@@ -22,10 +22,16 @@ function HomeScreen(props) {
   const [scale, setScale] = useState(new Animated.Value(1))
   const [opacity, setOpacity] = useState(new Animated.Value(1))
   const [cards, setCards] = useState(props.cards);
+  const [selectedCards, setSelectedCards] = useState(props.selectedCards);
+
+
 
 
   useEffect(() => {
-    props.fetchCards()
+    var i;
+    for (i = 0; i < 9; i++) {
+      props.fetchCards()
+    }
     props.fetchUser()
   }, [])
 
@@ -41,6 +47,10 @@ function HomeScreen(props) {
     toggleMenu()
     props.fetchUser()
   }, [props.action])
+
+  useEffect(() => {
+    setSelectedCards(props.selectedCards)
+  }, [props.selectedCards])
 
 
   const toggleMenu = () => {
@@ -88,7 +98,7 @@ function HomeScreen(props) {
           <FlatList
             horizontal={true}
             keyExtractor={(item) => item.id.toString()}
-            data={cards}
+            data={selectedCards}
             renderItem={({ item }) => (
               <TouchableOpacity onPress={() => {
                 props.navigation.push('Section', {
@@ -97,9 +107,9 @@ function HomeScreen(props) {
               }}>
                 <Card
                   title={item.note}
-                  image={{ uri: item.picture }}
+                  image={{ uri: item.sprites.front_default }}
                   caption={item.name}
-                  subtitle={item.company} />
+                  subtitle={item.moves[0].move.name} />
               </TouchableOpacity>
 
             )}

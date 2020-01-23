@@ -7,6 +7,7 @@ import thunk from 'redux-thunk'
 import AppNavigator from './navigator/AppNavigator'
 
 const store = createStore(reducer, applyMiddleware(thunk))
+console.disableYellowBox = true;
 
 const App = () => (
   <Provider store={store}>

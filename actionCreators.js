@@ -34,6 +34,46 @@ export function fetchUser() {
   }
 }
 
+
+export function updateCards(cards) {
+  return {
+    type: "UPDATE_CARDS",
+    payload: cards
+  }
+}
+
+
+
+export function fetchCards() {
+  return function (dispatch) {
+    // run a fetch
+
+    fetch(`https://pokeapi.co/api/v2/pokemon/${Math.floor(Math.random() * 386) + 1}`)
+      .then(res => res.json())
+      .then(cards => {
+        dispatch(updateCards(cards))
+      })
+  }
+}
+
+export function selectCard(card) {
+  console.log('I made it to the action creator', card.name)
+  return { type: "SELECT_CARD", payload: card }
+}
+
+
+// export function fetchCards() {
+//   return function (dispatch) {
+//     // run a fetch
+
+//     fetch(`http://localhost:3000/api/v1/cards`)
+//       .then(res => res.json())
+//       .then(cards => {
+//         dispatch(updateCards(cards))
+//       })
+//   }
+// }
+
 // export function fetchUser() {
 //   return function (dispatch) {
 //     // run a fetch
@@ -45,23 +85,3 @@ export function fetchUser() {
 //       })
 //   }
 // }
-
-export function updateCards(cards) {
-  return {
-    type: "UPDATE_CARDS",
-    payload: cards
-  }
-}
-
-export function fetchCards() {
-  return function (dispatch) {
-    // run a fetch
-
-    fetch(`http://localhost:3000/api/v1/cards`)
-      .then(res => res.json())
-      .then(cards => {
-        dispatch(updateCards(cards))
-      })
-  }
-}
-

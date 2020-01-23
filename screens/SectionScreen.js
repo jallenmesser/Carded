@@ -20,7 +20,7 @@ function SectionScreen(props) {
     <Container>
       <StatusBar hidden />
       <Cover>
-        <Image source={{ uri: card.picture }} />
+        <Image source={{ uri: card.sprites.front_shiny }} />
         <Title>{card.name}</Title>
         <Caption>{card.website}</Caption>
       </Cover>
@@ -57,7 +57,7 @@ flex: 1;
 `;
 
 const Cover = styled.View`
-height: 700px;
+height: 100%;
 `;
 
 const Image = styled.Image`
